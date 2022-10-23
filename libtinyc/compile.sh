@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CC65_PATH=${CC65_PATH:-/usr/bin}
+CC65_PATH=${CC65_PATH:-$MINGW_PREFIX/bin}
 AR65_PATH=${CC65_PATH}/ar65
 
 cd "$(dirname $0)"
