@@ -48,13 +48,13 @@ Building
 
 Check out this repository *recursively*:
 
-    $ git clone --recursive https://github.com/itszor/gcc-6502-bits.git
+    $ git clone --recursive https://github.com/stahta01/gcc-6502-bits.git
 
 Now build by running the build.sh script, e.g. as:
 
     $ ./build.sh 2>&1 | tee build.log
 
-The default location for cc65 binaries is in /usr (so ca65, ld65 and so on are present in /usr/bin/ca65, etc). If installed in another location, set the CC65_PATH variable to the path where the binaries exist. For example:
+The default location for cc65 binaries is in $MINGW_PREFIX (so ca65, ld65 and so on, for mingw64, are present in /mingw64/bin/ca65, etc). If installed in another location, set the CC65_PATH variable to the path where the binaries exist. For example:
 
     $ CC65_PATH=/usr/local/cc65/bin build.sh ...
 
