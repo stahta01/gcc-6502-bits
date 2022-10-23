@@ -4,7 +4,7 @@ GCC 6502 bits
 Build tools, tiny C library, etc. for gcc-6502 port.
 
 This is a fork of https://github.com/itszor/gcc-6502-bits so it works
-under MSys2 MinGW64 enviroment.
+under MSys2 MinGW64 environment.
 
 Prerequisites
 -------------
