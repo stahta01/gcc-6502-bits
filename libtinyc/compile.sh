@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CC65_PATH=${CC65_PATH:-$MINGW_PREFIX/bin}
-AR65_PATH=${CC65_PATH}/ar65
+AR65_CMD=${CC65_PATH}/ar65
+CA65_CMD=${CC65_PATH}/ca65
 
 cd "$(dirname $0)"
 
@@ -136,15 +137,27 @@ for mlib in "${MULTILIBS[@]}"; do
 	exit 1
 	;;
     esac
-    $TARGET-gcc -Os -Wall -nostdlib -I include $opts "$src" -c -o "$osdir/$obj.o"
-    ${AR65_PATH} a "$osdir/libtinyc.a" "$osdir/$obj.o"
+    case "$src" in
+      *.S)
+        echo "prepwork $src"
+        $TARGET-gcc -x assembler -Os -Wall -nostdlib -I include $opts "$src" -E > "$osdir/$obj.asm"
+        ${CA65_CMD} --verbose "$osdir/$obj.asm" -o "$osdir/$obj.o"
+    ;;
+      *.c)
+        echo "compiling $src"
+        $TARGET-gcc -x c -Os -Wall -nostdlib -I include $opts "$src" -S -o "$osdir/$obj.asm"
+        ${CA65_CMD} "$osdir/$obj.asm" -o "$osdir/$obj.o"
+    ;;
+    esac
+
+    ${AR65_CMD} a "$osdir/libtinyc.a" "$osdir/$obj.o"
   done
 
   ## Build tiny maths library.
   #rm -f "$osdir"/libm.a
   #src="$(src_for_machine "$osdir" "math")"
   #$TARGET-gcc -Os -nostdlib $opts "$src" -c -o "$osdir/math.o"
-  #${AR65_PATH} a "$osdir/libm.a" "$osdir/math.o"
+  #${AR65_CMD} a "$osdir/libm.a" "$osdir/math.o"
 
   mkdir -p "$PREFIX/$TARGET/$osdir/lib/"
   cp -f "$osdir/libtinyc.a" "$PREFIX/$TARGET/$osdir/lib"
