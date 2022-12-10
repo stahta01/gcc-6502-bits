@@ -831,7 +831,7 @@ INLINE static void BadInstrHandler(int opcode) {
 		sprintf(errstr,"Unsupported 6502 instruction 0x%02X at 0x%04X\n"
 			"  OK - instruction will be skipped\n"
 			"  Cancel - dump memory and exit",opcode,ProgramCounter-1);
-		if (MessageBox(GETHWND,errstr,WindowTitle,MB_OKCANCEL|MB_ICONERROR) == IDCANCEL)
+		if (MessageBox(NULL,errstr,"semi65x message",MB_OKCANCEL|MB_ICONERROR) == IDCANCEL)
 		{
 			beebmem_dumpstate();
 			exit(0);

@@ -2,7 +2,7 @@ CXX :=		g++ -DSEMI65X
 CFLAGS =	-g -O3 -Wall $(INCLUDE)
 CXXFLAGS =	-g -O3 -Wall $(INCLUDE)
 INCLUDE :=
-LIBS :=		-lboost_regex
+LIBS :=		-lboost_regex-mt
 LD :=		$(CXX)
 
 OBJS :=		mapfile.o disas.o semi65x.o 6502core.o
