@@ -54,8 +54,8 @@ OBJECTS=(
 set -e
 #set -x
 
-mkdir -p $PREFIX/$TARGET/usr/include
-cp -rf include/* $PREFIX/$TARGET/usr/include
+mkdir -p $PREFIX/$TARGET/include
+cp -rf include/* $PREFIX/$TARGET/include
 
 # Return the OS-specific source directory to use for a given multilib "OS" dir
 # given in $1.
@@ -146,7 +146,7 @@ for mlib in "${MULTILIBS[@]}"; do
   $TARGET-gcc -Os -nostdlib $opts "$src" -c -o "$osdir/math.o"
   ${AR65_PATH} a "$osdir/libm.a" "$osdir/math.o"
 
-  mkdir -p "$PREFIX/$TARGET/$osdir/usr/lib/"
-  cp -f "$osdir/libtinyc.a" "$PREFIX/$TARGET/$osdir/usr/lib"
-  cp -f "$osdir/libm.a" "$PREFIX/$TARGET/$osdir/usr/lib"
+  mkdir -p "$PREFIX/$TARGET/$osdir/lib/"
+  cp -f "$osdir/libtinyc.a" "$PREFIX/$TARGET/$osdir/lib"
+  cp -f "$osdir/libm.a" "$PREFIX/$TARGET/$osdir/lib"
 done
