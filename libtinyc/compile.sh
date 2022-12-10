@@ -140,13 +140,13 @@ for mlib in "${MULTILIBS[@]}"; do
     ${AR65_PATH} a "$osdir/libtinyc.a" "$osdir/$obj.o"
   done
 
-  # Build tiny maths library.
-  rm -f "$osdir"/libm.a
-  src="$(src_for_machine "$osdir" "math")"
-  $TARGET-gcc -Os -nostdlib $opts "$src" -c -o "$osdir/math.o"
-  ${AR65_PATH} a "$osdir/libm.a" "$osdir/math.o"
+  ## Build tiny maths library.
+  #rm -f "$osdir"/libm.a
+  #src="$(src_for_machine "$osdir" "math")"
+  #$TARGET-gcc -Os -nostdlib $opts "$src" -c -o "$osdir/math.o"
+  #${AR65_PATH} a "$osdir/libm.a" "$osdir/math.o"
 
   mkdir -p "$PREFIX/$TARGET/$osdir/lib/"
   cp -f "$osdir/libtinyc.a" "$PREFIX/$TARGET/$osdir/lib"
-  cp -f "$osdir/libm.a" "$PREFIX/$TARGET/$osdir/lib"
+  #cp -f "$osdir/libm.a" "$PREFIX/$TARGET/$osdir/lib"
 done
