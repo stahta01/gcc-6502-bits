@@ -10,41 +10,29 @@ Prerequisites
 -------------
 
 **Install the cc65 compiler suite**
-
-Most Linux distributions have a prepackaged cc65, but often it is outdated. Should you run into issues, build the latest version from https://github.com/cc65/cc65.git
+See package located here https://github.com/stahta01/cc65/releases
+Should you run into issues, build a recent version from https://github.com/cc65/cc65.git
 
 **Install the prerequisites for building GCC**
-
-    For Debian-based distros:
-    # apt-get build-dep gcc-4.8
-
-    For RedHat-based distros:
-    # yum install -y gcc gcc-c++ mpfr-devel gmp-devel libmpc-devel flex
+    pacman -S --needed ${MINGW_PACKAGE_PREFIX}-gcc
 
 **Install Boost development libraries**
 
 For semi65x (the included simulator), you also need Boost development libraries:
 
-    For Debian-based distros:
-    # apt-get install libboost-dev libboost-regex-dev
-    
-    For RedHat-based distros:
-    # yum install -y boost boost-devel
+    pacman -S --needed ${MINGW_PACKAGE_PREFIX}-boost
 
 **Install DejaGNU (optional)**
 
 For running the GCC regression tests you will need to have DejaGNU installed:
 
-    For Debian-based distros:
-    # apt-get install dejagnu
-    
-    For RedHat-based distros:
-    # yum install -y dejagnu
+    pacman -S --needed dejagnu
+
 
 Work in progress
 ----------------
 
-This is a work-in-progress compiler, and many bugs remain. You can build code for semi65x (the included simulator), and limited support also exists for Acorn BBC Model B or Master computers (you may see some references to the C64, but that's not properly implemented yet). Adding support for other systems shouldn't be too hard - contact me if you'd like to try that!
+This is a work-in-progress compiler, and many bugs remain. You can build code for semi65x (the included simulator).
 
 Building
 --------
@@ -59,22 +47,26 @@ Now build by running the build.sh script, e.g. as:
 
 The default location for cc65 binaries is in $MINGW_PREFIX (so ca65, ld65 and so on, for mingw64, are present in /mingw64/bin/ca65, etc). If installed in another location, set the CC65_PATH variable to the path where the binaries exist. For example:
 
-    $ CC65_PATH=/usr/local/cc65/bin build.sh ...
+    $ CC65_PATH=/mingw32/bin build.sh ...
 
 After a while, you should have a 6502 cross-compiler in a directory named 'prefix'.
-
-Running code
-------------
 
 Set your PATH to include prefix/bin:
 
     $ export PATH=`pwd`/prefix/bin:$PATH
 
+Now build semi65x by running the make command, e.g. as:
+
+    $ cd semi65x && make 2>&1 | tee ../semi65x_build.log
+
+Running code
+------------
+
 Now use the compiler like any other cross-compiler:
 
     $ 6502-gcc helloworld.c -O2 -o helloworld
 
-If you build the enclosed simulator (needs Boost, cd semi65x && make) you can run the generated code:
+If you build the enclosed simulator you can run the generated code:
 
     $ semi65x/semi65x -l 0x200 ./helloworld
     Hello world
